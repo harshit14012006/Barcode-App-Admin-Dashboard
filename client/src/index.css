@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* Body text */
+p, a, li, span, td, th, button, textarea, input {
+  font-family: 'Poppins', 'Inter', sans-serif;
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes blink {
+  50% {
+    border-color: transparent;
+  }
+}
+
+.animate-typing {
+  display: inline-block;
+  width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  animation: typing 3s steps(30, end) forwards, blink 0.7s step-end infinite;
+}
+
+/* Auto-hide Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #3b82f6;
+  border-radius: 9999px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: auto;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #2563eb;
+}
+
+body:hover::-webkit-scrollbar-thumb {
+  opacity: 1;
+}
