@@ -11,7 +11,7 @@ import ManageStaff from "./pages/ManageStaff";
 import Settings from "./pages/Settings";
 import Login from "./pages/Login";
 import StaffPage from "./pages/StaffPage";
-import StaffDashboard from "./pages/StaffDashboard"; // ✅ Staff Dashboar
+import StaffDashboard from "./pages/StaffDashboard"; 
 import ManageProducts from "./pages/ManageProducts";
 
 export default function App() {
