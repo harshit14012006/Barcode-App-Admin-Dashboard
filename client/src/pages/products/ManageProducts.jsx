@@ -1,10 +1,10 @@
 // pages/ManageProducts.jsx
 import { useEffect, useState } from "react";
 import axios from "axios";
-import FiltersBar from "../components/products/FiltersBar";
-import ProductCardView from "../components/products/ProductCardView";
-import ProductTableView from "../components/products/ProductTableView";
-import EditProductDrawer from "../components/products/EditProductDrawer";
+import FiltersBar from "../../components/products/FiltersBar";
+import ProductCardView from "../../components/products/ProductCardView";
+import ProductTableView from "../../components/products/ProductTableView";
+import EditProductDrawer from "../../components/products/EditProductDrawer";
 
 export default function ManageProducts() {
   const [products, setProducts] = useState([]);

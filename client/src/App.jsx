@@ -7,12 +7,14 @@ import ProtectedRoute from "./components/ProtectedRoute";
 
 // Pages
 import AdminDashboard from "./pages/AdminDashboard";
-import ManageStaff from "./pages/ManageStaff";
+import ManageStaff from "./pages/users/ManageStaff";
 import Settings from "./pages/Settings";
 import Login from "./pages/Login";
-import StaffPage from "./pages/StaffPage";
+import StaffPage from "./pages/users/StaffPage";
 import StaffDashboard from "./pages/StaffDashboard"; 
-import ManageProducts from "./pages/ManageProducts";
+import ManageProducts from "./pages/products/ManageProducts";
+import AddProducts from "./pages/products/AddProducts";
+import AddCategory from "./pages/AddCategory";
 
 export default function App() {
   const [isCollapsed, setIsCollapsed] = useState(false); // desktop collapse
@@ -21,28 +23,28 @@ export default function App() {
   return (
     <Router>
       <Routes>
-        {/* Login bina sidebar */}
+        {/* Login page */}
         <Route path="/" element={<Login />} />
 
-        {/* Dashboard routes with Sidebar + Navbar */}
+        {/* Dashboard routes */}
         <Route
           path="/dashboard/*"
           element={
             <div className="flex h-screen">
-              {/* Sidebar */}
+              {/* Sidebar with gradient hover effects */}
               <Sidebar
                 isCollapsed={isCollapsed}
-                isMobileOpen={isMobileOpen}
                 setIsCollapsed={setIsCollapsed}
+                isMobileOpen={isMobileOpen}
                 setIsMobileOpen={setIsMobileOpen}
               />
 
               {/* Main content */}
               <div className="flex-1 flex flex-col">
-                {/* Navbar */}
+                {/* Navbar with animated gradient hover */}
                 <Navbar setIsMobileOpen={setIsMobileOpen} />
 
-                {/* Page Content */}
+                {/* Page content */}
                 <main className="flex-1 p-6 overflow-y-auto bg-gray-100">
                   <Routes>
                     {/* 🟢 Admin Routes */}
@@ -55,10 +57,26 @@ export default function App() {
                       }
                     />
                     <Route
-                      path="admin/staff/manage"
+                      path="admin/products/add"
                       element={
                         <ProtectedRoute role="admin">
-                          <ManageStaff />
+                          <AddProducts />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="admin/products/manage"
+                      element={
+                        <ProtectedRoute role="admin">
+                          <ManageProducts />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="admin/products/category/add"
+                      element={
+                        <ProtectedRoute role="admin">
+                          <AddCategory />
                         </ProtectedRoute>
                       }
                     />
@@ -71,10 +89,10 @@ export default function App() {
                       }
                     />
                     <Route
-                      path="admin/products/manage"
+                      path="admin/staff/manage"
                       element={
                         <ProtectedRoute role="admin">
-                          <ManageProducts />
+                          <ManageStaff />
                         </ProtectedRoute>
                       }
                     />

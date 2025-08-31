@@ -1,134 +1,147 @@
-import { Users, Settings, DollarSign, Package, AlertTriangle, BarChart3 } from "lucide-react";
+import { BarChart3, Users, ShoppingBag, Package, DollarSign, TrendingUp } from "lucide-react";
+import { motion } from "framer-motion";
+import {
+  ResponsiveContainer,
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+} from "recharts";
 
 export default function AdminDashboard() {
+  // Dummy sales data
+  const salesData = [
+    { month: "Jan", sales: 12000 },
+    { month: "Feb", sales: 18500 },
+    { month: "Mar", sales: 15000 },
+    { month: "Apr", sales: 21000 },
+    { month: "May", sales: 18000 },
+    { month: "Jun", sales: 24000 },
+  ];
+
   return (
     <div className="p-4 md:p-6 space-y-6">
 
       {/* Page Header */}
       <div>
         <h2 className="text-2xl md:text-3xl font-bold mb-2 flex items-center gap-2">
-          <BarChart3 className="text-blue-600" size={28} />
-          Admin Dashboard
+          <BarChart3 className="text-green-500" size={28} />
+          <span className="bg-gradient-to-r from-green-500 to-orange-400 bg-clip-text text-transparent">
+            Admin Dashboard
+          </span>
         </h2>
         <p className="text-gray-600 text-sm md:text-base">
           Welcome back, Admin 👋. Here’s an overview of your platform.
         </p>
       </div>
 
-      {/* Stats Overview */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-        <div className="bg-white shadow rounded-2xl p-4 flex items-center gap-3 md:gap-4">
-          <DollarSign className="text-green-600" size={28} />
-          <div>
-            <p className="text-gray-500 text-xs md:text-sm">Daily Sales</p>
-            <p className="text-lg md:text-xl font-bold">₹12,500</p>
+      {/* Analytics Cards */}
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        
+        {/* Users */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+          className="bg-white/90 backdrop-blur-md shadow-xl rounded-2xl p-5 flex items-center gap-4 hover:shadow-2xl transition"
+        >
+          <div className="p-3 rounded-xl bg-green-100 text-green-600">
+            <Users size={26} />
           </div>
-        </div>
+          <div>
+            <h4 className="text-lg font-semibold">1,250</h4>
+            <p className="text-gray-500 text-sm">Total Users</p>
+          </div>
+        </motion.div>
 
-        <div className="bg-white shadow rounded-2xl p-4 flex items-center gap-3 md:gap-4">
-          <Users className="text-blue-600" size={28} />
-          <div>
-            <p className="text-gray-500 text-xs md:text-sm">Total Users</p>
-            <p className="text-lg md:text-xl font-bold">145</p>
+        {/* Orders */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="bg-white/90 backdrop-blur-md shadow-xl rounded-2xl p-5 flex items-center gap-4 hover:shadow-2xl transition"
+        >
+          <div className="p-3 rounded-xl bg-orange-100 text-orange-600">
+            <ShoppingBag size={26} />
           </div>
-        </div>
+          <div>
+            <h4 className="text-lg font-semibold">320</h4>
+            <p className="text-gray-500 text-sm">Orders Today</p>
+          </div>
+        </motion.div>
 
-        <div className="bg-white shadow rounded-2xl p-4 flex items-center gap-3 md:gap-4">
-          <Package className="text-purple-600" size={28} />
-          <div>
-            <p className="text-gray-500 text-xs md:text-sm">Products in Stock</p>
-            <p className="text-lg md:text-xl font-bold">320</p>
+        {/* Products */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="bg-white/90 backdrop-blur-md shadow-xl rounded-2xl p-5 flex items-center gap-4 hover:shadow-2xl transition"
+        >
+          <div className="p-3 rounded-xl bg-blue-100 text-blue-600">
+            <Package size={26} />
           </div>
-        </div>
+          <div>
+            <h4 className="text-lg font-semibold">480</h4>
+            <p className="text-gray-500 text-sm">Products</p>
+          </div>
+        </motion.div>
 
-        <div className="bg-white shadow rounded-2xl p-4 flex items-center gap-3 md:gap-4">
-          <AlertTriangle className="text-red-600" size={28} />
-          <div>
-            <p className="text-gray-500 text-xs md:text-sm">Low Stock Alerts</p>
-            <p className="text-lg md:text-xl font-bold">3</p>
+        {/* Revenue */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+          className="bg-white/90 backdrop-blur-md shadow-xl rounded-2xl p-5 flex items-center gap-4 hover:shadow-2xl transition"
+        >
+          <div className="p-3 rounded-xl bg-purple-100 text-purple-600">
+            <DollarSign size={26} />
           </div>
-        </div>
+          <div>
+            <h4 className="text-lg font-semibold">₹2,45,000</h4>
+            <p className="text-gray-500 text-sm">Revenue</p>
+          </div>
+        </motion.div>
       </div>
 
-      {/* Recent Orders + User Activity */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-
-        {/* Recent Orders */}
-        <div className="bg-white shadow rounded-2xl p-4 md:p-5 overflow-x-auto">
-          <h3 className="text-lg md:text-xl font-semibold mb-3 md:mb-4">Recent Orders</h3>
-          <table className="w-full text-sm md:text-base text-left min-w-[400px] md:min-w-full">
-            <thead className="text-gray-600 border-b">
-              <tr>
-                <th className="pb-2">Order ID</th>
-                <th className="pb-2">Customer</th>
-                <th className="pb-2">Amount</th>
-                <th className="pb-2">Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr className="border-b">
-                <td>#1001</td>
-                <td>Aryan</td>
-                <td>₹3,200</td>
-                <td className="text-green-600 font-medium">Completed</td>
-              </tr>
-              <tr className="border-b">
-                <td>#1002</td>
-                <td>Simran</td>
-                <td>₹1,450</td>
-                <td className="text-yellow-600 font-medium">Pending</td>
-              </tr>
-              <tr>
-                <td>#1003</td>
-                <td>Rahul</td>
-                <td>₹2,700</td>
-                <td className="text-red-600 font-medium">Cancelled</td>
-              </tr>
-            </tbody>
-          </table>
+      {/* Sales Overview Chart */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        className="bg-white/90 backdrop-blur-md shadow-xl rounded-2xl p-6"
+      >
+        <div className="flex items-center gap-2 mb-4">
+          <TrendingUp className="text-blue-600" size={24} />
+          <h3 className="text-lg md:text-xl font-semibold bg-gradient-to-r from-blue-600 to-green-500 bg-clip-text text-transparent">
+            Sales Overview
+          </h3>
         </div>
 
-        {/* Recent User Activity */}
-        <div className="bg-white shadow rounded-2xl p-4 md:p-5">
-          <h3 className="text-lg md:text-xl font-semibold mb-3 md:mb-4">Recent User Activity</h3>
-          <ul className="space-y-2 md:space-y-3 text-sm md:text-base">
-            <li className="flex items-center justify-between">
-              <span>🟢 Neha logged in</span>
-              <span className="text-gray-500 text-xs md:text-sm">2 mins ago</span>
-            </li>
-            <li className="flex items-center justify-between">
-              <span>🟡 Arjun updated profile</span>
-              <span className="text-gray-500 text-xs md:text-sm">10 mins ago</span>
-            </li>
-            <li className="flex items-center justify-between">
-              <span>🔴 Kabir deleted account</span>
-              <span className="text-gray-500 text-xs md:text-sm">1 hour ago</span>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      {/* Settings Quick Links */}
-      <div className="bg-white shadow rounded-2xl p-4 md:p-5">
-        <h3 className="text-lg md:text-xl font-semibold mb-3 md:mb-4 flex items-center gap-2">
-          <Settings className="text-gray-700" size={20} />
-          Quick Settings
-        </h3>
-        <div className="flex flex-wrap gap-2 sm:gap-3 md:gap-4">
-          <button className="px-3 py-2 md:px-4 md:py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 text-xs md:text-sm">
-            Manage Users
-          </button>
-          <button className="px-3 py-2 md:px-4 md:py-2 bg-green-600 text-white rounded-lg shadow hover:bg-green-700 text-xs md:text-sm">
-            Add Product
-          </button>
-          <button className="px-3 py-2 md:px-4 md:py-2 bg-purple-600 text-white rounded-lg shadow hover:bg-purple-700 text-xs md:text-sm">
-            View Reports
-          </button>
-          <button className="px-3 py-2 md:px-4 md:py-2 bg-gray-600 text-white rounded-lg shadow hover:bg-gray-700 text-xs md:text-sm">
-            System Settings
-          </button>
-        </div>
-      </div>
+        <ResponsiveContainer width="100%" height={300}>
+          <LineChart data={salesData}>
+            <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+            <XAxis dataKey="month" stroke="#6b7280" />
+            <YAxis stroke="#6b7280" />
+            <Tooltip contentStyle={{ backgroundColor: "white", borderRadius: "10px", border: "1px solid #e5e7eb" }} />
+            <Line
+              type="monotone"
+              dataKey="sales"
+              stroke="url(#colorSales)"
+              strokeWidth={3}
+              dot={{ r: 5, fill: "#22c55e" }}
+              activeDot={{ r: 8 }}
+            />
+            <defs>
+              <linearGradient id="colorSales" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stopColor="#22c55e" />
+                <stop offset="100%" stopColor="#f97316" />
+              </linearGradient>
+            </defs>
+          </LineChart>
+        </ResponsiveContainer>
+      </motion.div>
     </div>
   );
 }

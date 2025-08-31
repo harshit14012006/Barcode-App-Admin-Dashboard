@@ -13,12 +13,13 @@ import {
   FileText,
   AlertTriangle,
   UserPlus,
+  ClipboardList,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
-export default function AdminSidebar({ isCollapsed, setIsCollapsed, isMobileOpen, setIsMobileOpen }) {
+export default function Sidebar({ isCollapsed, setIsCollapsed, isMobileOpen, setIsMobileOpen }) {
   const location = useLocation();
-  const [expandedItem, setExpandedItem] = useState(null); // null | 'staff' | 'products'
+  const [expandedItem, setExpandedItem] = useState(null);
   const [isFloatingOpen, setIsFloatingOpen] = useState(false);
   const floatingRef = useRef(null);
 
@@ -35,44 +36,45 @@ export default function AdminSidebar({ isCollapsed, setIsCollapsed, isMobileOpen
 
   const menuItems = [
     { type: "header", label: "Operations" },
-    { name: "Dashboard", icon: <Home size={20} className="text-blue-500" />, path: "/dashboard/admin" },
-    { name: "Sales", icon: <DollarSign size={20} className="text-green-500" />, path: "/dashboard/admin/sales" },
+    { name: "Dashboard", icon: <Home size={20} className="text-green-600" />, path: "/dashboard/admin" },
+    { name: "Sales Overview", icon: <DollarSign size={20} className="text-orange-500" />, path: "/dashboard/admin/sales" },
     {
-      name: "Products",
-      icon: <Box size={20} className="text-orange-500" />,
+      name: "Products & Inventory",
+      icon: <Box size={20} className="text-orange-600" />,
       key: "products",
       subItems: [
-        { name: "Add Product", path: "/dashboard/admin/products/add", icon: <UserPlus size={16} className="text-orange-400" /> },
-        { name: "Manage Products", path: "/dashboard/admin/products/manage", icon: <Users size={16} className="text-yellow-400" /> },
+        { name: "New Product", path: "/dashboard/admin/products/add", icon: <UserPlus size={16} className="text-orange-400" /> },
+        { name: "Product Catalog", path: "/dashboard/admin/products/manage", icon: <ClipboardList size={16} className="text-yellow-500" /> },
+        { name: "Categories", path: "/dashboard/admin/products/category/add", icon: <FileText size={16} className="text-green-400" /> },
       ],
     },
-    { name: "Inventory Alerts", icon: <AlertTriangle size={20} className="text-red-500" />, path: "/dashboard/admin/inventory-alerts" },
+    { name: "Stock Alerts", icon: <AlertTriangle size={20} className="text-red-600" />, path: "/dashboard/admin/inventory-alerts" },
 
     { type: "header", label: "Staff Management" },
     {
-      name: "Staff",
-      icon: <Users size={20} className="text-pink-500" />,
+      name: "Team Management",
+      icon: <Users size={20} className="text-blue-600" />,
       key: "staff",
       subItems: [
-        { name: "Add Staff", path: "/dashboard/admin/staff/add", icon: <UserPlus size={16} className="text-pink-400" /> },
-        { name: "Manage Staff", path: "/dashboard/admin/staff/manage", icon: <Users size={16} className="text-purple-400" /> },
+        { name: "New Staff Member", path: "/dashboard/admin/staff/add", icon: <UserPlus size={16} className="text-pink-400" /> },
+        { name: "Staff Directory", path: "/dashboard/admin/staff/manage", icon: <Users size={16} className="text-purple-400" /> },
       ],
     },
 
     { type: "header", label: "Reports & Settings" },
-    { name: "Reports", icon: <FileText size={20} className="text-teal-500" />, path: "/dashboard/admin/reports" },
-    { name: "Settings", icon: <Settings size={20} className="text-gray-400" />, path: "/dashboard/admin/settings" },
+    { name: "Analytics & Reports", icon: <FileText size={20} className="text-teal-600" />, path: "/dashboard/admin/reports" },
+    { name: "System Settings", icon: <Settings size={20} className="text-gray-500" />, path: "/dashboard/admin/settings" },
   ];
 
-  const activeClass = "bg-blue-600 text-white shadow-md";
-  const inactiveClass = "text-gray-300 hover:bg-gray-800 hover:text-white";
+  const activeClass = "bg-gradient-to-r from-green-500 to-orange-400 text-white shadow-md";
+  const inactiveClass = "text-gray-700 transition-colors duration-300";
 
   const renderMenu = (isMobile = false) =>
     menuItems.map((item, index) => {
       if (item.type === "header") {
         if (isCollapsed) return null;
         return (
-          <div key={index} className="text-gray-400 text-xs font-semibold uppercase px-3 mt-3 mb-1">
+          <div key={index} className="text-gray-500 text-xs font-semibold uppercase px-3 mt-3 mb-1">
             {item.label}
           </div>
         );
@@ -92,7 +94,7 @@ export default function AdminSidebar({ isCollapsed, setIsCollapsed, isMobileOpen
                   setIsFloatingOpen(expandedItem === item.key ? false : true);
                 }
               }}
-              className={`flex items-center justify-between gap-3 px-3 py-2 rounded-lg cursor-pointer transition ${isAnyActive ? activeClass : inactiveClass} hover:bg-gray-800`}
+              className={`flex items-center justify-between gap-3 px-3 py-2 rounded-xl cursor-pointer transition-all duration-300 ${isAnyActive ? activeClass : inactiveClass} hover:shadow-lg hover:bg-gradient-to-r hover:from-green-400 hover:to-orange-300`}
             >
               <div className="flex items-center gap-3">
                 {React.cloneElement(item.icon, { className: isAnyActive ? "text-white" : item.icon.props.className })}
@@ -105,7 +107,7 @@ export default function AdminSidebar({ isCollapsed, setIsCollapsed, isMobileOpen
               )}
             </div>
 
-            {/* Expanded Sidebar */}
+            {/* Expanded SubItems */}
             <AnimatePresence>
               {expandedItem === item.key && !isCollapsed && (
                 <motion.div
@@ -121,7 +123,7 @@ export default function AdminSidebar({ isCollapsed, setIsCollapsed, isMobileOpen
                         key={sub.name}
                         to={sub.path}
                         onClick={isMobile ? () => setIsMobileOpen(false) : undefined}
-                        className={`flex items-center gap-2 px-3 py-2 rounded-lg text-gray-300 hover:bg-gray-800 hover:text-white transition ${isActive ? activeClass : ""}`}
+                        className={`flex items-center gap-2 px-3 py-2 rounded-xl ${isActive ? activeClass : inactiveClass} hover:shadow-lg hover:bg-gradient-to-r hover:from-green-400 hover:to-orange-300 transition-all duration-500`}
                       >
                         {React.cloneElement(sub.icon, { className: isActive ? "text-white" : sub.icon.props.className })}
                         <span className="font-medium">{sub.name}</span>
@@ -146,7 +148,7 @@ export default function AdminSidebar({ isCollapsed, setIsCollapsed, isMobileOpen
                   width: 200,
                 }}
               >
-                <div className="bg-gray-800 rounded-md shadow-lg flex flex-col py-1">
+                <div className="bg-white/90 backdrop-blur-md rounded-xl shadow-lg flex flex-col py-1">
                   {item.subItems.map((sub) => {
                     const isActive = location.pathname === sub.path;
                     return (
@@ -157,7 +159,7 @@ export default function AdminSidebar({ isCollapsed, setIsCollapsed, isMobileOpen
                           setIsFloatingOpen(false);
                           setExpandedItem(null);
                         }}
-                        className={`flex items-center gap-2 px-3 py-2 text-gray-200 hover:bg-gray-700 rounded transition ${isActive ? activeClass : ""}`}
+                        className={`flex items-center gap-2 px-3 py-2 rounded-xl ${isActive ? activeClass : inactiveClass} hover:shadow-lg hover:bg-gradient-to-r hover:from-green-400 hover:to-orange-300 transition-all duration-500`}
                       >
                         {React.cloneElement(sub.icon, { className: isActive ? "text-white" : sub.icon.props.className })}
                         <span className="font-medium">{sub.name}</span>
@@ -177,7 +179,7 @@ export default function AdminSidebar({ isCollapsed, setIsCollapsed, isMobileOpen
           key={item.name}
           to={item.path}
           onClick={isMobile ? () => setIsMobileOpen(false) : undefined}
-          className={`flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200 ${isActive ? activeClass : inactiveClass}`}
+          className={`flex items-center gap-3 px-3 py-2 rounded-xl ${isActive ? activeClass : inactiveClass} hover:shadow-lg hover:bg-gradient-to-r hover:from-green-400 hover:to-orange-300 transition-all duration-500`}
         >
           {React.cloneElement(item.icon, { className: isActive ? "text-white" : item.icon.props.className })}
           {!isCollapsed && <span className="font-medium">{item.name}</span>}
@@ -189,51 +191,50 @@ export default function AdminSidebar({ isCollapsed, setIsCollapsed, isMobileOpen
     <>
       {/* Desktop Sidebar */}
       <motion.div
-        className="hidden md:flex flex-col bg-gray-900 text-white shadow-lg h-screen overflow-hidden"
+        className="hidden md:flex flex-col bg-white/90 backdrop-blur-md text-gray-800 shadow-lg h-screen overflow-hidden rounded-r-2xl"
         animate={{ width: isCollapsed ? 80 : 256 }}
         transition={{ type: "spring", stiffness: 200, damping: 20 }}
       >
-        {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-gray-800">
+        <div className="flex items-center justify-between p-4 border-b border-gray-200">
           <div className="flex items-center gap-2">
-            <ShoppingCart size={24} className="text-blue-400" />
+            <ShoppingCart size={24} className="text-green-600" />
             {!isCollapsed && (
-              <motion.h1 initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="text-xl font-bold tracking-wide">
+              <motion.h1 initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="text-xl font-bold tracking-wide text-gray-800">
                 DailyCart
               </motion.h1>
             )}
           </div>
-          <button onClick={() => setIsCollapsed(!isCollapsed)} className="p-1 rounded-lg hover:bg-gray-800 transition">
+          <button onClick={() => setIsCollapsed(!isCollapsed)} className="p-1 rounded-lg hover:bg-green-100 transition">
             {isCollapsed ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
           </button>
         </div>
 
-        <nav className="flex-1 p-3 space-y-1">{renderMenu(false)}</nav>
+        <nav className="flex-1 p-3 space-y-1 overflow-y-auto">{renderMenu(false)}</nav>
       </motion.div>
 
       {/* Mobile Sidebar */}
       <AnimatePresence>
         {isMobileOpen && (
           <motion.div className="fixed inset-0 z-50 flex md:hidden" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            <div className="fixed inset-0 bg-black opacity-50 backdrop-blur-sm" onClick={() => setIsMobileOpen(false)} />
+            <div className="fixed inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setIsMobileOpen(false)} />
             <motion.div
-              className="relative w-64 bg-gray-900 text-white flex flex-col shadow-xl"
+              className="relative w-64 bg-white/90 backdrop-blur-md text-gray-800 flex flex-col shadow-xl rounded-r-2xl"
               initial={{ x: -300 }}
               animate={{ x: 0 }}
               exit={{ x: -300 }}
               transition={{ type: "spring", stiffness: 200, damping: 25 }}
             >
-              <div className="flex items-center justify-between p-4 border-b border-gray-800">
+              <div className="flex items-center justify-between p-4 border-b border-gray-200">
                 <div className="flex items-center gap-2">
-                  <ShoppingCart size={22} className="text-blue-400" />
-                  <h1 className="text-lg font-bold tracking-wide">DailyCart</h1>
+                  <ShoppingCart size={22} className="text-green-600" />
+                  <h1 className="text-lg font-bold tracking-wide text-gray-800">DailyCart</h1>
                 </div>
-                <button onClick={() => setIsMobileOpen(false)} className="p-1 hover:bg-gray-800 rounded-lg transition">
+                <button onClick={() => setIsMobileOpen(false)} className="p-1 hover:bg-green-100 rounded-lg transition">
                   <X size={20} />
                 </button>
               </div>
 
-              <nav className="flex-1 p-3 space-y-1">{renderMenu(true)}</nav>
+              <nav className="flex-1 p-3 space-y-1 overflow-y-auto">{renderMenu(true)}</nav>
             </motion.div>
           </motion.div>
         )}
