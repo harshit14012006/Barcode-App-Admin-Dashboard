@@ -91,7 +91,7 @@ export default function AddProducts({ isSidebarCollapsed = false }) {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/categories");
+        const res = await axios.get("https://barcode-app-admin-dashboard.onrender.com/api/categories");
         setCategories(res.data);
       } catch (err) {
         console.error("Error fetching categories:", err);
@@ -135,7 +135,7 @@ export default function AddProducts({ isSidebarCollapsed = false }) {
       setMessage("");
 
       // 🔗 Backend API call (your controller addProduct is used here)
-      const res = await axios.post("http://localhost:5000/api/products/add", {
+      const res = await axios.post("https://barcode-app-admin-dashboard.onrender.com/api/products/add", {
         productName,
         barcode,
         price,

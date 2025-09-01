@@ -42,7 +42,7 @@ export default function ManageProducts() {
     const fetchProducts = async () => {
       try {
         setLoading(true);
-        const { data } = await axios.get("http://localhost:5000/api/products");
+        const { data } = await axios.get("https://barcode-app-admin-dashboard.onrender.com/api/products");
         setProducts(data);
       } catch {
         setError("⚠️ Failed to fetch products. Please try again.");
@@ -91,7 +91,7 @@ export default function ManageProducts() {
   const deleteProduct = async (id) => {
     if (!confirm("Are you sure you want to delete this product?")) return;
     try {
-      await axios.delete(`http://localhost:5000/api/products/${id}`);
+      await axios.delete(`https://barcode-app-admin-dashboard.onrender.com/api/products/${id}`);
       setProducts(products.filter((p) => p._id !== id));
       showToast("✅ Product deleted successfully!");
     } catch {
@@ -132,13 +132,13 @@ export default function ManageProducts() {
       let res;
       if (editingProduct) {
         res = await axios.put(
-          `http://localhost:5000/api/products/${editingProduct._id}`,
+          `https://barcode-app-admin-dashboard.onrender.com/api/products/${editingProduct._id}`,
           formData
         );
         setProducts(products.map((p) => (p._id === res.data._id ? res.data : p)));
         showToast("✅ Product updated successfully!");
       } else {
-        res = await axios.post("http://localhost:5000/api/products", formData);
+        res = await axios.post("https://barcode-app-admin-dashboard.onrender.com/api/products", formData);
         setProducts([...products, res.data]);
         showToast("✅ Product added successfully!");
       }

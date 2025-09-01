@@ -20,7 +20,7 @@ export default function FiltersBar({
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const { data } = await axios.get("http://localhost:5000/api/categories");
+        const { data } = await axios.get("https://barcode-app-admin-dashboard.onrender.com/api/categories");
         setCategories(data); // [{_id, name, description}, ...]
       } catch (err) {
         console.error("Failed to fetch categories", err);

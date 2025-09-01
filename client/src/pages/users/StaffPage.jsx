@@ -24,7 +24,7 @@ export default function StaffPage({ isSidebarCollapsed = false }) {
       setError("");
       setMessage("");
 
-      const res = await axios.post("http://localhost:5000/api/user/register", {
+      const res = await axios.post("https://barcode-app-admin-dashboard.onrender.com/api/user/register", {
         name,
         email,
         password,

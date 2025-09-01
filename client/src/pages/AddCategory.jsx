@@ -18,7 +18,7 @@ export default function AddCategory() {
 
   const fetchCategories = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/categories");
+      const res = await axios.get("https://barcode-app-admin-dashboard.onrender.com/api/categories");
       setCategories(res.data);
     } catch (err) {
       console.error("Error fetching categories:", err);
@@ -36,13 +36,13 @@ export default function AddCategory() {
       setMessage("");
 
       if (isEditing) {
-        await axios.put(`http://localhost:5000/api/categories/${editId}`, {
+        await axios.put(`https://barcode-app-admin-dashboard.onrender.com/api/categories/${editId}`, {
           name,
           description,
         });
         setMessage("Category updated successfully!");
       } else {
-        await axios.post("http://localhost:5000/api/categories", {
+        await axios.post("https://barcode-app-admin-dashboard.onrender.com/api/categories", {
           name,
           description,
         });
@@ -62,7 +62,7 @@ export default function AddCategory() {
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this category?")) return;
     try {
-      await axios.delete(`http://localhost:5000/api/categories/${id}`);
+      await axios.delete(`https://barcode-app-admin-dashboard.onrender.com/api/categories/${id}`);
       fetchCategories();
     } catch (err) {
       alert("Error deleting category");

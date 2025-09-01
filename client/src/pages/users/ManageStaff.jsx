@@ -36,7 +36,7 @@ export default function ManageStaff() {
     const fetchUsers = async () => {
       try {
         setLoading(true);
-        const { data } = await axios.get("http://localhost:5000/api/user");
+        const { data } = await axios.get("https://barcode-app-admin-dashboard.onrender.com/api/user");
         setUsers(data);
       } catch {
         setError("⚠️ Failed to fetch users. Please try again.");
@@ -80,7 +80,7 @@ export default function ManageStaff() {
   const deleteUser = async (id) => {
     if (!confirm("Are you sure you want to delete this user?")) return;
     try {
-      await axios.delete(`http://localhost:5000/api/user/${id}`);
+      await axios.delete(`https://barcode-app-admin-dashboard.onrender.com/api/user/${id}`);
       setUsers(users.filter((u) => u._id !== id));
       showToast("✅ User deleted successfully!");
     } catch {
@@ -116,7 +116,7 @@ export default function ManageStaff() {
 
     try {
       const { data } = await axios.put(
-        `http://localhost:5000/api/user/${editingUser._id}`,
+        `https://barcode-app-admin-dashboard.onrender.com/api/user/${editingUser._id}`,
         dataToSend
       );
       setUsers(users.map((u) => (u._id === data.user._id ? data.user : u)));
